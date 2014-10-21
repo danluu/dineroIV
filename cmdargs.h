@@ -43,7 +43,6 @@
  * $Header: /home/edler/dinero/d4/RCS/cmdargs.h,v 1.5 1997/12/08 19:35:24 edler Exp $
  */
 
-
 /*
  * This structure describes a command line arg for Dinero IV.
  * Some args require a cache attribute prefix, -ln-idu, where
@@ -52,7 +51,14 @@
  *
  * The arglist structure also supports the help message,
  * summary info, and option customization.
- */ 
+ */
+
+/************************************************************************************
+ *
+ * Modified by Milena Milenkovic to support SBC traces, 2003
+ *
+ * Note: All modifications have 'mm' comment
+ ************************************************************************************/
 
 #ifndef MAX_LEV
 #define MAX_LEV	5		/* allow -ln prefix no larger than this */
@@ -92,6 +98,9 @@ extern double stat_interval;	/* for -stat-interval */
 extern long on_trigger;		/* for -on-trigger */
 extern long off_trigger;	/* for -off-trigger */
 extern int stat_idcombine;	/* for -stat-idcombine */
+/* mm */
+extern char 	*tracename;	/* mm for -trnanme, name of trace */
+extern int 	maxtrace;	/* mm for -maxtrace */
 
 /*
  * The size of each cache is given by

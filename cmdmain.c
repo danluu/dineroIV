@@ -5,7 +5,7 @@
  * Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
  * All rights reserved.
  * Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software and
  * its associated documentation for non-commercial purposes is hereby
  * granted (for commercial purposes see below), provided that the above
@@ -25,12 +25,12 @@
  * to export control.  This software is experimental.  NECI and Mark D. Hill
  * make no representations regarding the suitability of this software for
  * any purpose and neither NECI nor Mark D. Hill will support the software.
- * 
+ *
  * Use of this software for commercial purposes is also possible, but only
  * if, in addition to the above requirements for non-commercial use, written
  * permission for such use is obtained by the commercial user from NECI or
  * Mark D. Hill prior to the fabrication and distribution of the software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED AS IS.  NECI AND MARK D. HILL DO NOT MAKE
  * ANY WARRANTEES EITHER EXPRESS OR IMPLIED WITH REGARD TO THE SOFTWARE.
  * NECI AND MARK D. HILL ALSO DISCLAIM ANY WARRANTY THAT THE SOFTWARE IS
@@ -50,6 +50,13 @@
  * $Header: /home/edler/dinero/d4/RCS/cmdmain.c,v 1.14 1998/02/06 20:58:11 edler Exp $
  */
 
+ /************************************************************************************
+ *
+ * Modified by Milena Milenkovic to support SBC traces, 2003
+ *
+ * Note: All modifications have 'mm' comment
+ *************************************************************************************/
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -67,11 +74,14 @@
 #include "tracein.h"
 
 
+
 /* some global variables */
 char *progname = "dineroIV";		/* for error messages */
 int optstringmax;			/* for help_* functions */
 d4cache *levcache[3][MAX_LEV];		/* to locate cache by level and type */
 d4cache *mem;				/* which cache represents simulated memory? */
+char 	*tracename;			/* mm for -trname, name of trace */
+int	maxtrace;			/* mm process from 1 to maxtrace traces */
 #if !D4CUSTOM
 const char **cust_argv;			/* for args to pass to custom version */
 int cust_argc = 1;			/* how many args for custom version */
@@ -1948,6 +1958,7 @@ main (int argc, char **argv)
 
 	doargs (argc, argv);
 	verify_options();
+
 	initialize_caches (&ci, &cd);
 #if !D4CUSTOM
 	if (customname != NULL) {
@@ -1955,6 +1966,9 @@ main (int argc, char **argv)
 		/* never returns */
 	}
 #endif
+	if (tracename != NULL)	/* mm */
+		printf("tracename %s\n", tracename);
+
 	if (cd == NULL)
 		cd = ci;	/* for unified L1 cache */
 
@@ -1968,6 +1982,7 @@ main (int argc, char **argv)
 	summarize_caches (ci, cd);
 
 	printf ("\n---Simulation begins.\n");
+
 	tintcount = stat_interval;
 	flcount = flushcount;
 	while (1) {
@@ -2007,7 +2022,9 @@ done:
 	r.address = 0;
 	r.size = 0;
 	d4ref (cd, r);
+
 	printf ("---Simulation complete.\n");
+
 	dostats();
 	printf ("---Execution complete.\n");
 	return 0;

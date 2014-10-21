@@ -5,7 +5,7 @@
  * Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
  * All rights reserved.
  * Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software and
  * its associated documentation for non-commercial purposes is hereby
  * granted (for commercial purposes see below), provided that the above
@@ -25,12 +25,12 @@
  * to export control.  This software is experimental.  NECI and Mark D. Hill
  * make no representations regarding the suitability of this software for
  * any purpose and neither NECI nor Mark D. Hill will support the software.
- * 
+ *
  * Use of this software for commercial purposes is also possible, but only
  * if, in addition to the above requirements for non-commercial use, written
  * permission for such use is obtained by the commercial user from NECI or
  * Mark D. Hill prior to the fabrication and distribution of the software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED AS IS.  NECI AND MARK D. HILL DO NOT MAKE
  * ANY WARRANTEES EITHER EXPRESS OR IMPLIED WITH REGARD TO THE SOFTWARE.
  * NECI AND MARK D. HILL ALSO DISCLAIM ANY WARRANTY THAT THE SOFTWARE IS
@@ -43,6 +43,13 @@
  * $Header: /home/edler/dinero/d4/RCS/tracein.h,v 1.4 1997/12/08 19:35:24 edler Exp $
  */
 
+ /************************************************************************************
+ *
+ * Modified by Milena Milenkovic to support SBC traces, 2003
+ *
+ * Note: All modifications have 'mm' comment
+ *************************************************************************************/
+
 
 /* One of the following functions is called to generate each trace record */
 extern d4memref tracein_xdin (void);
@@ -50,6 +57,7 @@ extern d4memref tracein_din (void);
 extern d4memref tracein_pixie32 (void);
 extern d4memref tracein_pixie64 (void);
 extern d4memref tracein_binary (void);
+extern d4memref tracein_sbc (void); /* mm */
 
 /* A pointer to one of the above functions */
 extern d4memref (*input_function) (void);

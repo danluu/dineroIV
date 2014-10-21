@@ -43,7 +43,6 @@
  * $Header: /home/edler/dinero/d4/RCS/tracein.c,v 1.8 1997/12/12 20:36:39 edler Exp $
  */
 
-
 /*
  * This file contains code to verify the trace input format specified
  * and set up to make the call.
@@ -51,6 +50,13 @@
  * you need to modify when adding a new input format to Dinero IV.
  * The bulk of the new format-specific code should go into a new source file.
  */
+
+ /************************************************************************************
+ *
+ * Modified by Milena Milenkovic to support SBC traces, 2003
+ *
+ * Note: All modifications have 'mm' comment
+ *************************************************************************************/
 
 #include <stddef.h>
 #include <stdio.h>
@@ -85,6 +91,9 @@ verify_trace_format()
 	case 'b':				/* binary format, similar to din */
 		  input_function = tracein_binary;
 		  break;
+	case 's':				/* mm sbc.gz format */
+		  input_function = tracein_sbc;
+		  break;
 	}
 }
 
@@ -93,6 +102,6 @@ verify_trace_format()
 void
 help_trace_format (int indent)
 {
-	printf ("\n %*s (D=extended din, d=traditional din, p=pixie32, P=pixie64,\n %*s b=binary)",
+	printf ("\n %*s (D=extended din, d=traditional din, p=pixie32, P=pixie64,\n %*s b=binary s=SBC.gz)", /* mm */
 		indent, " ", indent, " ");
 }

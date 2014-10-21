@@ -43,6 +43,13 @@
  * $Header: /home/edler/dinero/d4/RCS/cmdargs.c,v 1.11 1997/12/12 20:36:39 edler Exp $
  */
 
+/************************************************************************************
+ *
+ * Modified by Milena Milenkovic to support SBC traces, 2003
+ *
+ * Note: All modifications have 'mm' comment
+ *************************************************************************************/
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -153,6 +160,16 @@ struct arglist args[] = {
 	  "Where to get the latest version or contact the authors",
 	  match_0arg, val_helpw, NULL,
 	  NULL, help_0arg },
+	{ "-trname", 2, &tracename, NULL, //mm
+	  NULL,
+	  "Name of the partial gzipped trace in -m -s formats",
+	  match_1arg, val_string, NULL,
+	  NULL, help_string },
+	{ "-maxtrace", 2, &maxtrace, NULL, //mm
+	  NULL,
+	  "Stop simulation after U partial traces",
+	  match_1arg, val_uint, NULL,
+	  NULL, help_uint },
 #if !D4CUSTOM
 	{ "-dineroIII", 0, NULL, NULL,
 	  NULL,

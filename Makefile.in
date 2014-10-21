@@ -4,7 +4,7 @@
 # Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
 # All rights reserved.
 # Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
-# 
+#
 # Permission to use, copy, modify, and distribute this software and
 # its associated documentation for non-commercial purposes is hereby
 # granted (for commercial purposes see below), provided that the above
@@ -24,12 +24,12 @@
 # to export control.  This software is experimental.  NECI and Mark D. Hill
 # make no representations regarding the suitability of this software for
 # any purpose and neither NECI nor Mark D. Hill will support the software.
-# 
+#
 # Use of this software for commercial purposes is also possible, but only
 # if, in addition to the above requirements for non-commercial use, written
 # permission for such use is obtained by the commercial user from NECI or
 # Mark D. Hill prior to the fabrication and distribution of the software.
-# 
+#
 # THE SOFTWARE IS PROVIDED AS IS.  NECI AND MARK D. HILL DO NOT MAKE
 # ANY WARRANTEES EITHER EXPRESS OR IMPLIED WITH REGARD TO THE SOFTWARE.
 # NECI AND MARK D. HILL ALSO DISCLAIM ANY WARRANTY THAT THE SOFTWARE IS
@@ -45,6 +45,8 @@
 #	make -f $D4_SRC/Makefile custom_exe CUSTOM_NAME=custom_exe \
 #		CUSTOM_C=custom.c D4_SRC=$D4_SRC D4_LIB=$D4_SRC/libd4.a
 
+# Modified by Milena Milenkovic to support SBC traces, 2003
+
 srcdir = @srcdir@
 VPATH = @srcdir@
 prefix = @prefix@
@@ -54,13 +56,14 @@ SHELL = /bin/sh
 
 LIB_OBJ_LIST = ref.o misc.o
 CMD_OBJ_LIST = cmdmain.o cmdargs.o tracein.o \
-	xdinfmt.o dinfmt.o binaryfmt.o pixie32fmt.o pixie64fmt.o
+	xdinfmt.o dinfmt.o binaryfmt.o pixie32fmt.o pixie64fmt.o sbcfmt.o
 
 D4_SRC = $(srcdir)
 D4_LIB = $(D4_SRC)/libd4.a
 CMD_SRC_LIST = $(D4_SRC)/cmdmain.c $(D4_SRC)/cmdargs.c $(D4_SRC)/tracein.c \
 	$(D4_SRC)/xdinfmt.c $(D4_SRC)/dinfmt.c $(D4_SRC)/binaryfmt.c \
-	$(D4_SRC)/pixie32fmt.c $(D4_SRC)/pixie64fmt.c
+	$(D4_SRC)/pixie32fmt.c $(D4_SRC)/pixie64fmt.c $(D4_SRC)/mybinfmt.c \
+	$(D4_SRC)/sbcfmt.c $(D4_SRC)/pdatsfmt.c $(D4_SRC)/sbcseqfmt.c
 CUSTOM_NAME = d4custom # this is really just a placeholder
 
 CC = @CC@
@@ -102,5 +105,6 @@ tracein.o: tracein.c d4.h tracein.h config.h
 xdinfmt.o: xdinfmt.c d4.h cmdd4.h tracein.h config.h
 dinfmt.o: dinfmt.c d4.h cmdd4.h tracein.h config.h
 binaryfmt.o: binaryfmt.c d4.h cmdd4.h tracein.h config.h
+sbcfmt.o: sbcfmt.c d4.h cmdd4.h tracein.h config.h cmdargs.h sbc.h
 pixie32fmt.o: pixie32fmt.c d4.h cmdd4.h tracein.h config.h
 pixie64fmt.o: pixie64fmt.c d4.h cmdd4.h tracein.h config.h

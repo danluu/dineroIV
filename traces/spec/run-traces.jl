@@ -1,6 +1,7 @@
 #inputs to dineroIV argument. lru, fifo, random, or 2choies
 const evict_policies = ["l", "f", "r", "2"]
 const maxtrace = "1"
+const spec_types = ["int","fp"]
 
 # Missing args: -lN-Trepl, -trname, -maxtrace
 # Note: making l1i lru all the time
@@ -36,20 +37,22 @@ function get_trname_from_dir(dir::String)
 end
 
 function run_traces()
-    dirs = get_trace_dirs("int")    
-    for dir in dirs, evict_policy in evict_policies
-        trname = get_trname_from_dir(dir)
-        out_name = "../../output/$dir.$evict_policy.out"
-        dargs = make_dinero_args(base_args, evict_policy, trname, maxtrace, out_name)
-        # It's pretty painful to execute something from julia, and there's a year old bug
-        # that's still oustanding that will significantly change things when it's fixed.
-        # Furthermore `Cmd` seems to be generally quite buggy in julia.
-        # Rather than write something which may encounter more bugs and will break
-        # if/when `Cmd` is fixed, I'm writing out a file that some other script can execute.
-        script_name = "int/$dir/$dir.$evict_policy.sh"
-        f = open(script_name, "w")
-        write(f, dargs)
-        close(f)
+    for spec in spec_types
+        dirs = get_trace_dirs(spec)    
+        for dir in dirs, evict_policy in evict_policies
+            trname = get_trname_from_dir(dir)
+            out_name = "../../output/$dir.$evict_policy.out"
+            dargs = make_dinero_args(base_args, evict_policy, trname, maxtrace, out_name)
+            # It's pretty painful to execute something from julia, and there's a year old bug
+            # that's still oustanding that will significantly change things when it's fixed.
+            # Furthermore `Cmd` seems to be generally quite buggy in julia.
+            # Rather than write something which may encounter more bugs and will break
+            # if/when `Cmd` is fixed, I'm writing out a file that some other script can execute.
+            script_name = "$spec/$dir/$dir.$evict_policy.sh"
+            f = open(script_name, "w")
+            write(f, dargs)
+            close(f)
+        end
     end
 end
 

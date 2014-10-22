@@ -265,7 +265,6 @@ D4_INLINE
 d4stacknode *
 d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 {
-  // WARNING: this is just a stub that acts like random replacement.
 	if (ptr != NULL) {	/* hits */
 		if ((!D4CUSTOM || D4VAL (c, assoc) > 1 || (D4VAL (c, flags) & D4F_CCC) != 0) &&
 		    ptr != c->stack[stacknum].top)
@@ -276,7 +275,8 @@ d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 		ptr = c->stack[stacknum].top->up;
 		assert (ptr->valid == 0);
 		ptr->blockaddr = D4ADDR2BLOCK (c, m.address);
-		if (setsize >= D4HASH_THRESH)
+		if ((!D4CUSTOM || D4VAL(c,assoc) >= D4HASH_THRESH || (D4VAL(c,flags)&D4F_CCC)!=0) &&
+		    c->stack[stacknum].n > D4HASH_THRESH)
 			d4hash (c, stacknum, ptr);
 		c->stack[stacknum].top = ptr;	/* quicker than d4movetotop */
 		if (ptr->up->valid != 0) {
@@ -288,10 +288,9 @@ d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 		  	// this simulator and all rand calls should be fixed at the same time.
 			int rand1 = 2 + (random() % setsize);		  
 			int rand2 = rand1; 
-			while (rand2 == rand1) {
+			while (rand2 == rand1 && setsize > 1) {
 		  		rand2 = 2 + (random() % setsize);
 			}
-			// TODO: make rand2 distinct from rand1
 			int evict = rand2 > rand1 ? rand2 : rand1;
 			d4movetobot (c, stacknum, d4findnth (c, stacknum, evict));
 		}

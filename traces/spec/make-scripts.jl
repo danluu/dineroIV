@@ -47,9 +47,11 @@ function run_traces()
             # that's still oustanding that will significantly change things when it's fixed.
             # Furthermore `Cmd` seems to be generally quite buggy in julia.
             # Rather than write something which may encounter more bugs and will break
-            # if/when `Cmd` is fixed, I'm writing out a file that some other script can execute.
+            # if/when `Cmd` is fixed, I'm writing out a file that some other script can execute.            
+            shebang = "#!/bin/sh\n"
             script_name = "$spec/$dir/$dir.$evict_policy.sh"
             f = open(script_name, "w")
+            write(f, shebang)
             write(f, dargs)
             close(f)
         end

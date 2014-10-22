@@ -279,8 +279,22 @@ d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 		if (setsize >= D4HASH_THRESH)
 			d4hash (c, stacknum, ptr);
 		c->stack[stacknum].top = ptr;	/* quicker than d4movetotop */
-		if (ptr->up->valid != 0)	/* set is full */
-			d4movetobot (c, stacknum, d4findnth (c, stacknum, 2 + (random() % setsize)));
+		if (ptr->up->valid != 0) {
+			/* set is full */
+			// TODO: fix this random to really be random.
+			// First, we're probalby using C's LCG, and second we produce a number by using %.
+			// Both of those result in a poor distribution.
+			// This method is used here because it's the same method that's used all over
+		  	// this simulator and all rand calls should be fixed at the same time.
+			int rand1 = 2 + (random() % setsize);		  
+			int rand2 = rand1; 
+			while (rand2 == rand1) {
+		  		rand2 = 2 + (random() % setsize);
+			}
+			// TODO: make rand2 distinct from rand1
+			int evict = rand2 > rand1 ? rand2 : rand1;
+			d4movetobot (c, stacknum, d4findnth (c, stacknum, evict));
+		}
 	}
 	return ptr;
 }

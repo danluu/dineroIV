@@ -257,6 +257,36 @@ d4rep_random (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 }
 #endif	/* !D4CUSTOM || D4_OPT (rep_random) */
 
+#if !D4CUSTOM || D4_OPT (rep_2choices)
+/*
+ * 2-choices random replacement policy.
+ */
+D4_INLINE
+d4stacknode *
+d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+{
+  // WARNING: this is just a stub that acts like random replacement.
+	if (ptr != NULL) {	/* hits */
+		if ((!D4CUSTOM || D4VAL (c, assoc) > 1 || (D4VAL (c, flags) & D4F_CCC) != 0) &&
+		    ptr != c->stack[stacknum].top)
+			d4movetotop (c, stacknum, ptr);
+	} 
+	else { /* misses */
+		int setsize = c->stack[stacknum].n - 1;
+		ptr = c->stack[stacknum].top->up;
+		assert (ptr->valid == 0);
+		ptr->blockaddr = D4ADDR2BLOCK (c, m.address);
+		if (setsize >= D4HASH_THRESH)
+			d4hash (c, stacknum, ptr);
+		c->stack[stacknum].top = ptr;	/* quicker than d4movetotop */
+		if (ptr->up->valid != 0)	/* set is full */
+			d4movetobot (c, stacknum, d4findnth (c, stacknum, 2 + (random() % setsize)));
+	}
+	return ptr;
+}
+#endif	/* !D4CUSTOM || D4_OPT (rep_2choices) */
+
+
 
 #if !D4CUSTOM || D4_OPT (prefetch_none)
 /*

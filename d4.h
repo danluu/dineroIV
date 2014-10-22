@@ -411,6 +411,7 @@ void		d4customize (FILE *);
 extern d4stacknode *d4rep_lru (d4cache *, int stacknum, d4memref, d4stacknode *ptr);
 extern d4stacknode *d4rep_fifo (d4cache *, int stacknum, d4memref, d4stacknode *ptr);
 extern d4stacknode *d4rep_random (d4cache *, int stacknum, d4memref, d4stacknode *ptr);
+extern d4stacknode *d4rep_2choices (d4cache *, int stacknum, d4memref, d4stacknode *ptr);
 
 /* prefetch policies */
 extern d4pendstack *d4prefetch_none (d4cache *, d4memref, int miss, d4stacknode *);
@@ -436,6 +437,7 @@ extern int d4wback_impossible (d4cache *, d4memref, int, d4stacknode *, int); /*
 extern void d4init_rep_lru (d4cache *);
 extern void d4init_rep_fifo (d4cache *);
 extern void d4init_rep_random (d4cache *);
+extern void d4init_rep_2choices (d4cache *);
 
 extern void d4init_prefetch_none (d4cache *);
 extern void d4init_prefetch_always (d4cache *, int, int);

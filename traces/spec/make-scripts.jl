@@ -1,6 +1,6 @@
 #inputs to dineroIV argument. lru, fifo, random, or 2choies
 const evict_policies = ["l", "f", "r", "2"]
-const maxtrace = "1"
+const maxtrace = "100" # The SBC patches bug out if you specify a number > 101
 const spec_types = ["int","fp"]
 
 # Missing args: -lN-Trepl, -trname, -maxtrace
@@ -18,7 +18,7 @@ function get_trace_dirs(trace_type::String)
     readdir("./$trace_type/")
 end
 
-# dineroIV must be run from the directory that includes the trace files
+# the SBC patches to dineroIV must be run from the directory that includes the trace files
 # if we use -trname, which explains some of the oddness here.
 function make_dinero_args(base_args::String, evict_policy::String, trname::String, maxtrace::String,
                           out_name::String)

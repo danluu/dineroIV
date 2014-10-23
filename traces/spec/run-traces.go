@@ -16,6 +16,7 @@ func VisitFile(fp string, fi os.FileInfo, err error) error {
 	if !!fi.IsDir() {
 		return nil 
 	}
+
 	matched, err := filepath.Match("*.sh", fi.Name())
 	if err != nil {
 		fmt.Println(err) 

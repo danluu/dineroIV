@@ -1,0 +1,119 @@
+tracename vortex_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l2-usize 262144
+-l3-usize 2097152
+-l1-isize 32768
+-l1-dsize 32768
+-l2-ubsize 64
+-l3-ubsize 64
+-l1-ibsize 64
+-l1-dbsize 64
+-l2-usbsize 64
+-l3-usbsize 64
+-l1-isbsize 64
+-l1-dsbsize 64
+-l2-uassoc 8
+-l3-uassoc 8
+-l1-iassoc 8
+-l1-dassoc 8
+-l2-urepl r
+-l3-urepl r
+-l1-irepl l
+-l1-drepl r
+-l2-ufetch d
+-l3-ufetch d
+-l1-ifetch d
+-l1-dfetch d
+-l2-uwalloc a
+-l3-uwalloc a
+-l1-dwalloc a
+-l2-uwback a
+-l3-uwback a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-icache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		  1999999982	  1999999982	           0	           0	           0	           0
+  Fraction of total	      1.0000	      1.0000	      0.0000	      0.0000	      0.0000	      0.0000
+
+ Demand Misses		     4538440	     4538440	           0	           0	           0	           0
+  Demand miss rate	      0.0023	      0.0023	      0.0000	      0.0000	      0.0000	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	   290460160
+ ( / Demand Fetches)	      0.1452
+ Bytes To Memory	           0
+ ( / Demand Writes)	      0.0000
+ Total Bytes r/w Mem	   290460160
+ ( / Demand Fetches)	      0.1452
+
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   779038993	           0	   779038993	   529302782	   249736211	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.6794	      0.3206	      0.0000
+
+ Demand Misses		     9487958	           0	     9487958	     8880193	      607765	           0
+  Demand miss rate	      0.0122	      0.0000	      0.0122	      0.0168	      0.0024	      0.0000
+
+ Multi-block refs             48178
+ Bytes From Memory	   607229312
+ ( / Demand Fetches)	      0.7795
+ Bytes To Memory	    83608192
+ ( / Demand Writes)	      0.3348
+ Total Bytes r/w Mem	   690837504
+ ( / Demand Fetches)	      0.8868
+
+l2-ucache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		    15332776	     4538440	    10794336	     9487958	     1306378	           0
+  Fraction of total	      1.0000	      0.2960	      0.7040	      0.6188	      0.0852	      0.0000
+
+ Demand Misses		     4462595	      879100	     3583495	     3496747	       86748	           0
+  Demand miss rate	      0.2910	      0.1937	      0.3320	      0.3685	      0.0664	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	   280054208
+ ( / Demand Fetches)	     18.2651
+ Bytes To Memory	    34104448
+ ( / Demand Writes)	     26.1061
+ Total Bytes r/w Mem	   314158656
+ ( / Demand Fetches)	     20.4894
+
+l3-ucache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		     4908729	      879100	     4029629	     3496747	      532882	           0
+  Fraction of total	      1.0000	      0.1791	      0.8209	      0.7124	      0.1086	      0.0000
+
+ Demand Misses		     1257636	       41537	     1216099	     1192828	       23271	           0
+  Demand miss rate	      0.2562	      0.0472	      0.3018	      0.3411	      0.0437	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	    78999360
+ ( / Demand Fetches)	     16.0936
+ Bytes To Memory	    20410176
+ ( / Demand Writes)	     38.3015
+ Total Bytes r/w Mem	    99409536
+ ( / Demand Fetches)	     20.2516
+
+---Execution complete.

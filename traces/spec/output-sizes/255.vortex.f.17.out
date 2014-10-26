@@ -1,0 +1,46 @@
+tracename vortex_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 131072
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 8
+-l1-drepl f
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   779038993	           0	   779038993	   529302782	   249736211	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.6794	      0.3206	      0.0000
+
+ Demand Misses		     4984289	           0	     4984289	     4737300	      246989	           0
+  Demand miss rate	      0.0064	      0.0000	      0.0064	      0.0090	      0.0010	      0.0000
+
+ Multi-block refs             48178
+ Bytes From Memory	   318994496
+ ( / Demand Fetches)	      0.4095
+ Bytes To Memory	    42372992
+ ( / Demand Writes)	      0.1697
+ Total Bytes r/w Mem	   361367488
+ ( / Demand Fetches)	      0.4639
+
+---Execution complete.

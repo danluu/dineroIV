@@ -1,0 +1,46 @@
+tracename sixtrack_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 1048576
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 8
+-l1-drepl l
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   493776813	           0	   493776813	   387265028	   106511785	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.7843	      0.2157	      0.0000
+
+ Demand Misses		     1037685	           0	     1037685	     1036933	         752	           0
+  Demand miss rate	      0.0021	      0.0000	      0.0021	      0.0027	      0.0000	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	    66411840
+ ( / Demand Fetches)	      0.1345
+ Bytes To Memory	       96832
+ ( / Demand Writes)	      0.0009
+ Total Bytes r/w Mem	    66508672
+ ( / Demand Fetches)	      0.1347
+
+---Execution complete.

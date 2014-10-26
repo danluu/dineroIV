@@ -1,0 +1,46 @@
+tracename fma3d_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 8388608
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 8
+-l1-drepl r
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   913972993	           0	   913972993	   601233722	   312739271	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.6578	      0.3422	      0.0000
+
+ Demand Misses		    19638834	           0	    19638834	    18198555	     1440279	           0
+  Demand miss rate	      0.0215	      0.0000	      0.0215	      0.0303	      0.0046	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	  1256885376
+ ( / Demand Fetches)	      1.3752
+ Bytes To Memory	   571624832
+ ( / Demand Writes)	      1.8278
+ Total Bytes r/w Mem	  1828510208
+ ( / Demand Fetches)	      2.0006
+
+---Execution complete.

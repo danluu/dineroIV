@@ -3,8 +3,10 @@
 using DataFrames
 # using Gadfly
 
-const levels = [1,2,3]
+# const levels = [1,2,3]
+const levels = [1]
 const policies = ["r", "f", "l", "2"]
+const cache_sizes = 16:25 # 2^16:2^25
 
 function bogus_plots(df)
     ndf = normalize_df(df)
@@ -29,10 +31,11 @@ function normalize_df(df)
     miss_ratio = Array(Float64, 0)
     ref = df[df[:policy].=="r",:]
     for row in eachrow(df)
-        row_name = row[1]
-        row_level = row[3]
-        ref_miss = ref[(ref[:level].==row_level) .* (ref[:name].==row_name),:miss][1]
-        row_miss = row[4]
+        row_name = row[:name]
+        row_level = row[:level]
+        row_size = row[:size]
+        ref_miss = ref[(ref[:level].==row_level) .* (ref[:name].==row_name) .* (ref[:size].==row_size),:miss][1]
+        row_miss = row[:miss]
         push!(miss_ratio, row_miss / ref_miss)
     end
     ndf = df
@@ -51,17 +54,16 @@ function geom_mean(xs::DataArray)
     e^(acc/length(xs))
 end
 
-function geom_mean(ndf::DataFrame, policy::String, level::Int)
-    miss_ratio = ndf[(ndf[:level].==level) .* (ndf[:policy].==policy),:miss_ratio]
+function geom_mean(ndf::DataFrame, policy::String, level::Int, size::Int)    
+    miss_ratio = ndf[(ndf[:level].==level) .* (ndf[:policy].==policy)  .* (ndf[:size].==size),:miss_ratio]
     geom_mean(miss_ratio)
 end
 
 function get_means()
-    df = readtable("sandy-bridge.csv")
+    df = readtable("sizes-8.csv")
     ndf = normalize_df(df)
-    print(typeof(ndf))
-    for l in levels, p in policies
-        println("$l $p $(geom_mean(ndf, p, l))")
+    for l in levels, p in policies, s in cache_sizes
+        println("$l,$p,$s,$(geom_mean(ndf, p, l, s))")
     end    
 end
 

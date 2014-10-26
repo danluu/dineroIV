@@ -1,5 +1,5 @@
-// Take a bunch of dineroIV outputs and produce a csv with cumulative cache hit rates
-// ignores l1i since l1i is relatively uninteresting for this data set.
+// Take a bunch of dineroIV outputs and produce a csv with cumulative cache hit rates.
+// Ignores l1i since l1i is relatively uninteresting for this data set.
 
 package main
 

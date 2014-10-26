@@ -20,7 +20,8 @@ var (
 	demandMisses = regexp.MustCompile(`^ Demand Misses\s+(\d+)`)
 )
 
-func pathToArgs(fp string) string {
+// TODO: refactor next two functions into a single function.
+func pathToArgsSandy(fp string) string {
 	// fp is something like "output/301.apsi.f.out"
 	// basePath is like "301.apsi.f.out"
 	// want ["301.aspi", "f"] or "301.aspi,f,"
@@ -28,6 +29,16 @@ func pathToArgs(fp string) string {
 	parts := strings.Split(basePath, ".")
 	return parts[0] + "." +  parts[1] + "," + parts[2] + ","
 }
+
+func pathToArgs(fp string) string {
+	// fp is something like "output/301.apsi.f.17.out"
+	// basePath is like "301.apsi.f.17.out"
+	// want ["301.aspi", "f", "17"] or "301.aspi,f,17"
+	basePath := filepath.Base(fp)
+	parts := strings.Split(basePath, ".")
+	return parts[0] + "." +  parts[1] + "," + parts[2] + "," + parts[3] + ","
+}
+
 
 func parseDineroOutput(fp string, fi os.FileInfo, err error) error {
 	if err != nil {

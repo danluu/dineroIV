@@ -1,4 +1,4 @@
-const cache_sizes = 16:25 # 2^16:2^25
+const cache_sizes = 18:25 # 2^16:2^25
 
 #inputs to dineroIV argument. lru, fifo, random, or 2choies
 const evict_policies = ["l", "f", "r", "2"]
@@ -15,10 +15,18 @@ const base_args_sandy = """../../../../dineroIV \\
 -informat s \\
 """
 
+# const base_args_size =  """../../../../dineroIV \\
+# -l1-dassoc 8 -l1-dbsize 64 \\
+# -informat s \\
+# """
+
 const base_args_size =  """../../../../dineroIV \\
--l1-dassoc 8 -l1-dbsize 64 \\
+-l1-dassoc 8 -l1-dbsize 64 -l1-isize 32k -l1-irepl l \\
+-l2-dassoc 8 -l2-dbsize 64 -l2-dsize 256k \\
+-l3-dassoc 8 -l3-dbsize 64 \\
 -informat s \\
 """
+
 
 function get_trace_dirs(trace_type::String)
     assert(trace_type == "int" || trace_type == "fp")
@@ -36,11 +44,23 @@ function make_dinero_args_sandy(base_args::String, evict_policy::String, trname:
       > $out_name""")
 end
 
+# function make_dinero_args_size(base_args::String, evict_policy::String, trname::String, maxtrace::String,
+#                           out_name::String, size::Int)
+#     string(base_args,
+#   """ -l1-drepl $evict_policy \\
+#       -l1-dsize $(2^size) \\
+#       -trname $trname \\
+#       -maxtrace $maxtrace \\
+#       > $out_name""")
+# end
+
 function make_dinero_args_size(base_args::String, evict_policy::String, trname::String, maxtrace::String,
                           out_name::String, size::Int)
     string(base_args,
   """ -l1-drepl $evict_policy \\
-      -l1-dsize $(2^size) \\
+      -l2-drepl $evict_policy \\
+      -l3-drepl $evict_policy \\
+      -l3-dsize $(2^size) \\
       -trname $trname \\
       -maxtrace $maxtrace \\
       > $out_name""")

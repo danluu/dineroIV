@@ -62,6 +62,7 @@ end
 function get_means()
     df = readtable("sizes-8.csv")
     ndf = normalize_df(df)
+    writetable("sizes-8b.csv", ndf)
     for l in levels, p in policies, s in cache_sizes
         println("$l,$p,$s,$(geom_mean(ndf, p, l, s))")
     end    

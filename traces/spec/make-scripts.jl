@@ -21,7 +21,8 @@ const base_args_sandy = """../../../../dineroIV \\
 # """
 
 const base_args_size =  """../../../../dineroIV \\
--l1-dassoc 8 -l1-dbsize 64 -l1-isize 32k -l1-irepl l \\
+-l1-iassoc 8 -l1-ibsize 64 -l1-isize 32k -l1-irepl l \\
+-l1-dassoc 8 -l1-dbsize 64 -l1-dsize 32k  \\
 -l2-dassoc 8 -l2-dbsize 64 -l2-dsize 256k \\
 -l3-dassoc 8 -l3-dbsize 64 \\
 -informat s \\

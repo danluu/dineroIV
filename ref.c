@@ -121,6 +121,8 @@ d4stacknode *d4rep_fifo (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 	{ d4dummy_crash("d4rep_fifo"); return NULL; }
 d4stacknode *d4rep_random (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 	{ d4dummy_crash("d4rep_random"); return NULL; }
+d4stacknode *d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+	{ d4dummy_crash("d4rep_2choices"); return NULL; }
 d4pendstack *d4prefetch_none (d4cache *c, d4memref m, int miss, d4stacknode *stackptr)
 	{ d4dummy_crash("d4prefetch_none"); return NULL; }
 d4pendstack *d4prefetch_always (d4cache *c, d4memref m, int miss, d4stacknode *stackptr)

@@ -1,5 +1,8 @@
 library(ggplot2)
 
+# color scheme used below is from http://colorbrewer2.org/
+# "qualatative", red blue green purple...
+
 dev.copy(png,"both.png",width=640,height=480)
 
 # Plot sandy bridge miss rates

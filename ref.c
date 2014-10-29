@@ -123,6 +123,10 @@ d4stacknode *d4rep_random (d4cache *c, int stacknum, d4memref m, d4stacknode *pt
 	{ d4dummy_crash("d4rep_random"); return NULL; }
 d4stacknode *d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 	{ d4dummy_crash("d4rep_2choices"); return NULL; }
+d4stacknode *d4rep_p2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+	{ d4dummy_crash("d4rep_2choices"); return NULL; }
+d4stacknode *d4rep_p3choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+	{ d4dummy_crash("d4rep_2choices"); return NULL; }
 d4pendstack *d4prefetch_none (d4cache *c, d4memref m, int miss, d4stacknode *stackptr)
 	{ d4dummy_crash("d4prefetch_none"); return NULL; }
 d4pendstack *d4prefetch_always (d4cache *c, d4memref m, int miss, d4stacknode *stackptr)
@@ -259,6 +263,7 @@ d4rep_random (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 }
 #endif	/* !D4CUSTOM || D4_OPT (rep_random) */
 
+// TODO: refactor all nchoices policies to use the same logic.
 #if !D4CUSTOM || D4_OPT (rep_2choices)
 /*
  * 2-choices random replacement policy.
@@ -301,6 +306,121 @@ d4rep_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
 }
 #endif	/* !D4CUSTOM || D4_OPT (rep_2choices) */
 
+// TODO: use something that isn't biased. This is slightly biased.
+int rand_bool(double probability)
+{
+  double p_scaled = probability * ((double)RAND_MAX+1) - rand();
+  if ( p_scaled >= 1 ) return 1;
+  if ( p_scaled <= 0 ) return 0;
+  return rand_bool( p_scaled );
+}
+
+#if !D4CUSTOM || D4_OPT (rep_psuedo_2choices)
+/*
+ * pseudo 2-choices random replacement policy.
+ */
+D4_INLINE
+d4stacknode *
+d4rep_pseudo_2choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+{
+	if (ptr != NULL) {	/* hits */
+		if ((!D4CUSTOM || D4VAL (c, assoc) > 1 || (D4VAL (c, flags) & D4F_CCC) != 0) &&
+		    ptr != c->stack[stacknum].top)
+			d4movetotop (c, stacknum, ptr);
+	} 
+	else { /* misses */
+		int setsize = c->stack[stacknum].n - 1;
+		ptr = c->stack[stacknum].top->up;
+		assert (ptr->valid == 0);
+		ptr->blockaddr = D4ADDR2BLOCK (c, m.address);
+		if ((!D4CUSTOM || D4VAL(c,assoc) >= D4HASH_THRESH || (D4VAL(c,flags)&D4F_CCC)!=0) &&
+		    c->stack[stacknum].n > D4HASH_THRESH)
+			d4hash (c, stacknum, ptr);
+		c->stack[stacknum].top = ptr;	/* quicker than d4movetotop */
+		if (ptr->up->valid != 0) {
+			/* set is full */
+			// TODO: fix this random to really be random.
+			// First, we're probalby using C's LCG, and second we produce a number by using %.
+			// Both of those result in a poor distribution.
+			// This method is used here because it's the same method that's used all over
+		  	// this simulator and all rand calls should be fixed at the same time.
+			int rand1 = 2 + (random() % setsize);		  
+			int rand2 = rand1; 
+			while (rand2 == rand1 && setsize > 1) {
+		  		rand2 = 2 + (random() % setsize);
+			}
+			int evict;
+			// Evict LRU of 2 with p = 0.8.
+			if (rand_bool(0.8)) {
+				evict = rand2 > rand1 ? rand2 : rand1;
+			} else {
+				evict = rand2 > rand1 ? rand1 : rand2;
+			}
+			d4movetobot (c, stacknum, d4findnth (c, stacknum, evict));
+		}
+	}
+	return ptr;
+}
+#endif	/* !D4CUSTOM || D4_OPT (rep_psuedo_2choices) */
+
+#if !D4CUSTOM || D4_OPT (rep_psuedo_3choices)
+/*
+ * pseudo 3-choices random replacement policy.
+ */
+D4_INLINE
+d4stacknode *
+d4rep_pseudo_3choices (d4cache *c, int stacknum, d4memref m, d4stacknode *ptr)
+{
+	if (ptr != NULL) {	/* hits */
+		if ((!D4CUSTOM || D4VAL (c, assoc) > 1 || (D4VAL (c, flags) & D4F_CCC) != 0) &&
+		    ptr != c->stack[stacknum].top)
+			d4movetotop (c, stacknum, ptr);
+	} 
+	else { /* misses */
+		int setsize = c->stack[stacknum].n - 1;
+		ptr = c->stack[stacknum].top->up;
+		assert (ptr->valid == 0);
+		ptr->blockaddr = D4ADDR2BLOCK (c, m.address);
+		if ((!D4CUSTOM || D4VAL(c,assoc) >= D4HASH_THRESH || (D4VAL(c,flags)&D4F_CCC)!=0) &&
+		    c->stack[stacknum].n > D4HASH_THRESH)
+			d4hash (c, stacknum, ptr);
+		c->stack[stacknum].top = ptr;	/* quicker than d4movetotop */
+		if (ptr->up->valid != 0) {
+			/* set is full */
+			// TODO: fix this random to really be random.
+			// First, we're probalby using C's LCG, and second we produce a number by using %.
+			// Both of those result in a poor distribution.
+			// This method is used here because it's the same method that's used all over
+		  	// this simulator and all rand calls should be fixed at the same time.
+			int rand1 = 2 + (random() % setsize);		  
+			int rand2 = rand1; 
+			while (rand2 == rand1 && setsize > 1) {
+		  		rand2 = 2 + (random() % setsize);
+			}
+			int rand3 = rand1; 
+			while (((rand3 == rand1) || (rand3 == rand2)) && setsize > 2) {
+		  		rand3 = 2 + (random() % setsize);
+			}
+			int rand2_rand1;
+			// 2-level LRU tournament with p = .8 of correct result at each level.
+			if (rand_bool(0.8)) {
+				rand2_rand1 = rand2 > rand1 ? rand2 : rand1;
+			} else {
+				rand2_rand1 = rand2 > rand1 ? rand1 : rand2;
+			}
+			int evict;
+			// Evict LRU of 2 with p = 0.8.
+			if (rand_bool(0.8)) {
+				evict = rand3 > rand2_rand1 ? rand3 : rand2_rand1;
+			} else {
+				evict = rand3 > rand2_rand1 ? rand2_rand1 : rand3;
+			}
+			d4movetobot (c, stacknum, d4findnth (c, stacknum, evict));
+		}
+	}
+	return ptr;
+}
+#endif	/* !D4CUSTOM || D4_OPT (rep_psuedo_3choices) */
 
 
 #if !D4CUSTOM || D4_OPT (prefetch_none)

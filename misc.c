@@ -146,6 +146,8 @@ d4setup()
 				if (d4_cust_vals[c->cacheid][6] != ((c->replacementf==d4rep_lru)?'l':
 							    (c->replacementf==d4rep_fifo)?'f':
 							    (c->replacementf==d4rep_2choices)?'2':
+							    (c->replacementf==d4rep_pseudo_2choices)?'b':
+							    (c->replacementf==d4rep_pseudo_3choices)?'3':
 							    (c->replacementf==d4rep_random)?'r':0))
 					problem |= 0x80;
 				if (d4_cust_vals[c->cacheid][7] != ((c->prefetchf==d4prefetch_none)?'n':
@@ -313,6 +315,20 @@ d4init_rep_2choices (d4cache *c)
 {
 	c->replacementf = d4rep_2choices;
 	c->name_replacement = "2 choices";
+}
+
+void
+d4init_rep_pseudo_2choices (d4cache *c)
+{
+	c->replacementf = d4rep_pseudo_2choices;
+	c->name_replacement = "pseudo 2 choices";
+}
+
+void
+d4init_rep_pseudo_3choices (d4cache *c)
+{
+	c->replacementf = d4rep_pseudo_3choices;
+	c->name_replacement = "pseudo 3 choices";
 }
 
 void
@@ -1001,6 +1017,18 @@ d4customize (FILE *f)
 				    "#define D4_POLICY_%d_rep '2'\n"
 				    "#undef d4rep_2choices\n"
 				    "#define d4rep_2choices d4_%dreplacement\n",
+				    cid, cid, cid);
+		else if (c->replacementf == d4rep_pseudo_2choices)
+			fprintf (f, "#define D4_OPTS_%d_rep_random 1\n"
+				    "#define D4_POLICY_%d_rep '2'\n"
+				    "#undef d4rep_pseudo_2choices\n"
+				    "#define d4rep_pseudo_2choices d4_%dreplacement\n",
+				    cid, cid, cid);
+		else if (c->replacementf == d4rep_pseudo_3choices)
+			fprintf (f, "#define D4_OPTS_%d_rep_random 1\n"
+				    "#define D4_POLICY_%d_rep '2'\n"
+				    "#undef d4rep_3choices\n"
+				    "#define d4rep_pseudo_3choices d4_%dreplacement\n",
 				    cid, cid, cid);
 		else
 			fprintf (f, "#undef D4_TRIGGER_%d_replacementf\n"

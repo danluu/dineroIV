@@ -302,7 +302,7 @@ void
 phelp_replacement (const struct arglist *adesc)
 {
 	phelp_char (adesc);
-	printf ("\n %*s (l=LRU, f=FIFO, r=random, 2=2choices)",
+	printf ("\n %*s (l=LRU, f=FIFO, r=random, 2=2choices, b=pseudo3, c=pseudo3)",
 		optstringmax, " ");
 }
 
@@ -445,6 +445,8 @@ verify_options()
 			    level_replacement[idu][lev]!='l' &&	/* LRU */
 			    level_replacement[idu][lev]!='f' &&	/* FIFO */
 			    level_replacement[idu][lev]!='r' && /* random */
+			    level_replacement[idu][lev]!='b' && /* pseudo 2choices */
+			    level_replacement[idu][lev]!='c' && /* pseudo 3choices */
 			    level_replacement[idu][lev]!='2')	/* 2choices */
 				shorthelp ("level %d %ccache replacement policy unrecognized\n",
 					   lev+1, idu==0?'u':(idu==1?'i':'d'));
@@ -622,6 +624,8 @@ init_1cache (d4cache *c, int lev, int idu)
 	case 'f': c->replacementf = d4rep_fifo; c->name_replacement = "FIFO"; break;
 	case 'r': c->replacementf = d4rep_random; c->name_replacement = "random"; break;
 	case '2': c->replacementf = d4rep_2choices; c->name_replacement = "2choices"; break;
+	case 'b': c->replacementf = d4rep_pseudo_2choices; c->name_replacement = "pseudo_2choices"; break;
+	case 'c': c->replacementf = d4rep_pseudo_3choices; c->name_replacement = "pseudo_3choices"; break;
 	}
 
 	switch (level_fetch[idu][lev]) {

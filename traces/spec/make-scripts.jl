@@ -1,7 +1,8 @@
 const cache_sizes = 18:25 # 2^16:2^25
 
 #inputs to dineroIV argument. lru, fifo, random, or 2choies
-const evict_policies = ["l", "f", "r", "2"]
+# const evict_policies = ["l", "f", "r", "2"]
+const evict_policies = ["b", "c"]
 const maxtrace = "100" # The SBC patches bug out if you specify a number > 101
 const spec_types = ["int","fp"]
 

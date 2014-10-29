@@ -4,9 +4,10 @@ using DataFrames
 # using Gadfly
 
 # const levels = [1,2,3]
-const levels = [1]
-const policies = ["r", "f", "l", "2"]
-const cache_sizes = 16:25 # 2^16:2^25
+const levels = [3]
+const policies = ["r", "f", "l", "2","b","c"]
+# const cache_sizes = 16:25 # 2^16:2^25
+const cache_sizes = 18:25 # 2^16:2^25
 
 function bogus_plots(df)
     ndf = normalize_df(df)
@@ -60,9 +61,9 @@ function geom_mean(ndf::DataFrame, policy::String, level::Int, size::Int)
 end
 
 function get_means()
-    df = readtable("sizes-8.csv")
+    df = readtable("sizes-p-multi-8.csv")
     ndf = normalize_df(df)
-    writetable("sizes-8b.csv", ndf)
+    writetable("sizes-p-multi-8b.csv", ndf)
     for l in levels, p in policies, s in cache_sizes
         println("$l,$p,$s,$(geom_mean(ndf, p, l, s))")
     end    

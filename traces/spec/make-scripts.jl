@@ -1,10 +1,14 @@
-const cache_sizes = 18:25 # 2^16:2^25
+const cache_sizes = 16:25 # 2^16:2^25
+# const cache_sizes = 18:25 # 2^16:2^25
 
 #inputs to dineroIV argument. lru, fifo, random, or 2choies
 # const evict_policies = ["l", "f", "r", "2"]
-const evict_policies = ["b", "c"]
+# const evict_policies = ["b", "c"]
+const evict_policies = ["l"]
 const maxtrace = "100" # The SBC patches bug out if you specify a number > 101
 const spec_types = ["int","fp"]
+
+const cache_assocs = [4, 8, 16, 32, 64]
 
 # Missing args: -lN-Trepl, -trname, -maxtrace
 # Note: making l1i lru all the time
@@ -20,6 +24,11 @@ const base_args_sandy = """../../../../dineroIV \\
 # -l1-dassoc 8 -l1-dbsize 64 \\
 # -informat s \\
 # """
+
+const base_args_size_assoc =  """../../../../dineroIV \\
+-l1-dbsize 64 \\
+-informat s \\
+ """
 
 const base_args_size =  """../../../../dineroIV \\
 -l1-iassoc 8 -l1-ibsize 64 -l1-isize 32k -l1-irepl l \\
@@ -56,13 +65,24 @@ end
 #       > $out_name""")
 # end
 
-function make_dinero_args_size(base_args::String, evict_policy::String, trname::String, maxtrace::String,
-                          out_name::String, size::Int)
-    string(base_args,
+# function make_dinero_args_size(base_args::String, evict_policy::String, trname::String, maxtrace::String,
+#                           out_name::String, size::Int)
+#     string(base_args,
+#   """ -l1-drepl $evict_policy \\
+#       -l2-drepl $evict_policy \\
+#       -l3-drepl $evict_policy \\
+#       -l3-dsize $(2^size) \\
+#       -trname $trname \\
+#       -maxtrace $maxtrace \\
+#       > $out_name""")
+# end
+
+function make_dinero_args_size_assoc(base_args::String, evict_policy::String, trname::String, maxtrace::String,
+                          out_name::String, size::Int, assoc::Int)
+    string(base_args_size_assoc,
   """ -l1-drepl $evict_policy \\
-      -l2-drepl $evict_policy \\
-      -l3-drepl $evict_policy \\
-      -l3-dsize $(2^size) \\
+      -l1-dsize $(2^size) \\
+      -l1-dassoc $assoc \\
       -trname $trname \\
       -maxtrace $maxtrace \\
       > $out_name""")
@@ -83,14 +103,14 @@ end
 function run_traces()
     for spec in spec_types
         dirs = get_trace_dirs(spec)    
-        for dir in dirs, evict_policy in evict_policies, size in cache_sizes
+        for dir in dirs, evict_policy in evict_policies, size in cache_sizes, assoc in cache_assocs
             trname = get_trname_from_dir(dir)
             # out_name = "../../output/$dir.$evict_policy.out"
-            out_name = "../../output/$dir.$evict_policy.$size.out"
+            out_name = "../../output/$dir.$evict_policy.$size.$assoc.out"
             # dargs = make_dinero_args(base_args, evict_policy, trname, maxtrace, out_name)
-            dargs = make_dinero_args_size(base_args_size, evict_policy, trname, maxtrace, out_name, size)
+            dargs = make_dinero_args_size_assoc(base_args_size, evict_policy, trname, maxtrace, out_name, size, assoc)
             shebang = "#!/bin/sh\n"
-            script_name = "$spec/$dir/$dir.$size.$evict_policy.sh"
+            script_name = "$spec/$dir/$dir.$size.$assoc.$evict_policy.sh"
             f = open(script_name, "w")
             write(f, shebang)
             write(f, dargs)

@@ -1,0 +1,46 @@
+tracename swim_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 262144
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 64
+-l1-drepl 2
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   657118991	           0	   657118991	   485352067	   171766924	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.7386	      0.2614	      0.0000
+
+ Demand Misses		    47620676	           0	    47620676	    36347450	    11273226	           0
+  Demand miss rate	      0.0725	      0.0000	      0.0725	      0.0749	      0.0656	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	  3047723264
+ ( / Demand Fetches)	      4.6380
+ Bytes To Memory	  1325015808
+ ( / Demand Writes)	      7.7140
+ Total Bytes r/w Mem	  4372739072
+ ( / Demand Fetches)	      6.6544
+
+---Execution complete.

@@ -1,0 +1,46 @@
+tracename mcf_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 8388608
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 4
+-l1-drepl 2
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   759536997	           0	   759536997	   688140098	    71396899	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.9060	      0.0940	      0.0000
+
+ Demand Misses		    40216787	           0	    40216787	    40058323	      158464	           0
+  Demand miss rate	      0.0529	      0.0000	      0.0529	      0.0582	      0.0022	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	  2573874368
+ ( / Demand Fetches)	      3.3887
+ Bytes To Memory	   240042688
+ ( / Demand Writes)	      3.3621
+ Total Bytes r/w Mem	  2813917056
+ ( / Demand Fetches)	      3.7048
+
+---Execution complete.

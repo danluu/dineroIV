@@ -1,0 +1,46 @@
+tracename gzip_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 65536
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 8
+-l1-drepl 2
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   647104098	           0	   647104098	   488483701	   158620397	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.7549	      0.2451	      0.0000
+
+ Demand Misses		    14649034	           0	    14649034	    13958291	      690743	           0
+  Demand miss rate	      0.0226	      0.0000	      0.0226	      0.0286	      0.0044	      0.0000
+
+ Multi-block refs           5693705
+ Bytes From Memory	   937538176
+ ( / Demand Fetches)	      1.4488
+ Bytes To Memory	   384251584
+ ( / Demand Writes)	      2.4225
+ Total Bytes r/w Mem	  1321789760
+ ( / Demand Fetches)	      2.0426
+
+---Execution complete.

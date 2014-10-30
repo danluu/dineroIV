@@ -1,0 +1,46 @@
+tracename galgel_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 65536
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 4
+-l1-drepl 2
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   825305552	           0	   825305552	   704964531	   120341021	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.8542	      0.1458	      0.0000
+
+ Demand Misses		    24633574	           0	    24633574	    18418942	     6214632	           0
+  Demand miss rate	      0.0298	      0.0000	      0.0298	      0.0261	      0.0516	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	  1576548736
+ ( / Demand Fetches)	      1.9103
+ Bytes To Memory	   513420800
+ ( / Demand Writes)	      4.2664
+ Total Bytes r/w Mem	  2089969536
+ ( / Demand Fetches)	      2.5324
+
+---Execution complete.

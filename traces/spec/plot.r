@@ -86,9 +86,9 @@ labs(x="L3 cache size (64k L1-d/L1-i, 256k L2)",y="Miss ratio (vs. random)") +
 scale_x_continuous(breaks=16:24, limits=c(16,24), labels=c("64k","128k","256k","512k","1M","2M","4M","8M","16M")) +
 scale_y_continuous(limits=c(.9,1.05)) + 
   scale_colour_manual(name = "Eviction Policy",
-                      labels = c("2 random\nchoices", "pseudo\n2 random", "psuedo\n3 random", "LRU"),
+		      labels = c("2 choices", "pseudo 2", "psuedo 3", "LRU"),
                       values = c("#e41a1c", "#ff7f00", "#a65628", "#4daf4a")) +   
   scale_shape_manual(name = "Eviction Policy",
-                      labels = c("2 random\nchoices", "pseudo\n2 random", "psuedo\n3 random", "LRU"),
+		      labels = c("2 choices", "pseudo 2", "psuedo 3", "LRU"),
                       values = c(15, 7, 9, 17)) +
 theme_minimal()

@@ -1,0 +1,46 @@
+tracename equake_m2b
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-dsize 65536
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 4
+-l1-drepl l
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat s
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-dcache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		   900875270	           0	   900875270	   809931597	    90943673	           0
+  Fraction of total	      1.0000	      0.0000	      1.0000	      0.8990	      0.1010	      0.0000
+
+ Demand Misses		    90124556	           0	    90124556	    88193604	     1930952	           0
+  Demand miss rate	      0.1000	      0.0000	      0.1000	      0.1089	      0.0212	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	  5767971584
+ ( / Demand Fetches)	      6.4026
+ Bytes To Memory	   447893312
+ ( / Demand Writes)	      4.9250
+ Total Bytes r/w Mem	  6215864896
+ ( / Demand Fetches)	      6.8998
+
+---Execution complete.

@@ -20,7 +20,7 @@ var (
 	demandMisses = regexp.MustCompile(`^ Demand Misses\s+(\d+)`)
 )
 
-// TODO: refactor next two functions into a single function.
+// TODO: refactor next three functions into a single function.
 func pathToArgsSandy(fp string) string {
 	// fp is something like "output/301.apsi.f.out"
 	// basePath is like "301.apsi.f.out"
@@ -30,13 +30,22 @@ func pathToArgsSandy(fp string) string {
 	return parts[0] + "." +  parts[1] + "," + parts[2] + ","
 }
 
-func pathToArgs(fp string) string {
+func pathToArgsSize(fp string) string {
 	// fp is something like "output/301.apsi.f.17.out"
 	// basePath is like "301.apsi.f.17.out"
 	// want ["301.aspi", "f", "17"] or "301.aspi,f,17"
 	basePath := filepath.Base(fp)
 	parts := strings.Split(basePath, ".")
 	return parts[0] + "." +  parts[1] + "," + parts[2] + "," + parts[3] + ","
+}
+
+func pathToArgs(fp string) string {
+	// fp is something like "output/301.apsi.f.17.out"
+	// basePath is like "301.apsi.f.17.32.out"
+	// want ["301.aspi", "f", "17", "32"] or "301.aspi,f,17,32"
+	basePath := filepath.Base(fp)
+	parts := strings.Split(basePath, ".")
+	return parts[0] + "." +  parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + ","
 }
 
 

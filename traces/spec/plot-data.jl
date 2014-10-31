@@ -4,10 +4,12 @@ using DataFrames
 # using Gadfly
 
 # const levels = [1,2,3]
-const levels = [3]
+const levels = [1]
 const policies = ["r", "f", "l", "2","b","c"]
+# const policies = ["l","2"]
 # const cache_sizes = 16:25 # 2^16:2^25
-const cache_sizes = 18:25 # 2^16:2^25
+const cache_sizes = 18:25 # 2^18:2^25
+const cache_assocs = [4, 8, 16, 32, 64]
 
 function bogus_plots(df)
     ndf = normalize_df(df)
@@ -28,14 +30,15 @@ function bogus_plots(df)
 end
 
 
-function normalize_df(df)
+function normalize_df(df, reference::String)
     miss_ratio = Array(Float64, 0)
-    ref = df[df[:policy].=="r",:]
+    ref = df[df[:policy].==reference,:]
     for row in eachrow(df)
         row_name = row[:name]
         row_level = row[:level]
         row_size = row[:size]
-        ref_miss = ref[(ref[:level].==row_level) .* (ref[:name].==row_name) .* (ref[:size].==row_size),:miss][1]
+        row_assoc = row[:assoc]
+        ref_miss = ref[(ref[:level].==row_level) .* (ref[:name].==row_name) .* (ref[:size].==row_size) .* (ref[:assoc].==row_assoc),:miss][1]
         row_miss = row[:miss]
         push!(miss_ratio, row_miss / ref_miss)
     end
@@ -55,17 +58,17 @@ function geom_mean(xs::DataArray)
     e^(acc/length(xs))
 end
 
-function geom_mean(ndf::DataFrame, policy::String, level::Int, size::Int)    
-    miss_ratio = ndf[(ndf[:level].==level) .* (ndf[:policy].==policy)  .* (ndf[:size].==size),:miss_ratio]
+function geom_mean(ndf::DataFrame, policy::String, level::Int, size::Int, assoc::Int)    
+    miss_ratio = ndf[(ndf[:level].==level) .* (ndf[:policy].==policy)  .* (ndf[:size].==size) .* (ndf[:assoc].==assoc),:miss_ratio]
     geom_mean(miss_ratio)
 end
 
 function get_means()
-    df = readtable("sizes-p-multi-8.csv")
-    ndf = normalize_df(df)
-    writetable("sizes-p-multi-8b.csv", ndf)
-    for l in levels, p in policies, s in cache_sizes
-        println("$l,$p,$s,$(geom_mean(ndf, p, l, s))")
+    df = readtable("size-assoc.csv")
+    ndf = normalize_df(df, "l") # normalize to LRU
+    writetable("size-assocb.csv", ndf)
+    for l in levels, p in policies, s in cache_sizes, a in cache_assocs
+        println("$l,$p,$s,$a,$(geom_mean(ndf, p, l, s, a))")
     end    
 end
 

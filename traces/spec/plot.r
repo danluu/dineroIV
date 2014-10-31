@@ -36,10 +36,10 @@ theme_minimal()
 
 # Plot miss rates with different sizes (3-level cache)
 dfm8b <- read.csv(file="sizes-multi-8b.csv")
-qplot(data=dfm8b[dfm8b$size <= 24 & dfm8b$size > 19,], x=size, y=miss, color=policy, shape=policy, size=I(4), position=position_jitter(h=0, w=.1))  +
+qplot(data=dfm8b[dfm8b$size <= 24 & dfm8b$size > 18,], x=size, y=miss, color=policy, shape=policy, size=I(4), position=position_jitter(h=0, w=.1))  +
 labs(x="L3 cache size (64k L1-d/L1-i, 256k L2)",y="Miss rate") +
 scale_x_continuous(breaks=16:24, limits=c(16,24), labels=c("64k","128k","256k","512k","1M","2M","4M","8M","16M")) +
-scale_y_continuous(limits=c(0,.35)) +
+scale_y_continuous(limits=c(0,.37)) +
   scale_colour_manual(name = "Eviction Policy",
                       labels = c("2 random\nchoices", "FIFO", "LRU", "random"),
                       values = c("#e41a1c", "#377eb8", "#4daf4a", "#984ea3")) +

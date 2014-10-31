@@ -7,8 +7,8 @@ using DataFrames
 const levels = [1]
 const policies = ["r", "f", "l", "2","b","c"]
 # const policies = ["l","2"]
-# const cache_sizes = 16:25 # 2^16:2^25
-const cache_sizes = 18:25 # 2^18:2^25
+const cache_sizes = 16:25 # 2^16:2^25
+# const cache_sizes = 18:25 # 2^18:2^25
 const cache_assocs = [4, 8, 16, 32, 64]
 
 function bogus_plots(df)

@@ -92,3 +92,13 @@ scale_y_continuous(limits=c(.9,1.05)) +
 		      labels = c("2 choices", "pseudo 2", "psuedo 3", "LRU"),
                       values = c(15, 7, 9, 17)) +
 theme_minimal()
+
+dfsam <- read.csv("size-assoc-means.csv")
+dfsam_sub <-dfsam[dfsam$size <= 24,]
+# dfsam_sub$cut <- cut(dfsam_sub$miss_ratio, breaks=c(seq(.94,1.06,by=.01)),right=FALSE)
+
+qplot(data=dfsam_sub,x=size,y=assoc) + geom_tile(aes(fill=miss_ratio),color="white") + 
+scale_fill_gradient2(low="darkgreen",high="darkred",midpoint=1.0) +
+scale_x_continuous(breaks=16:24, labels=c("64k","128k","256k","512k","1M","2M","4M","8M","16M")) +
+scale_y_continuous(trans="log2", breaks=c(4,8,16,32,64), labels=c(4,8,16,32,64))
+
